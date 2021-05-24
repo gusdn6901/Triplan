@@ -11,7 +11,6 @@ import java.util.List;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBContract;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBHelper;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
 
 public class ScheduleDAO implements ScheduleDAOInt {
     DBHelper dbHelper;
@@ -46,7 +45,7 @@ public class ScheduleDAO implements ScheduleDAOInt {
     }
 
     @Override
-    public boolean insertTrip(ScheduleDTO scheduleDTO) {
+    public boolean insertSchedule(ScheduleDTO scheduleDTO) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBContract.COLUMN_NAME_SCHEDULE_TRIP_ID, scheduleDTO.getSchedule_trip_id());
         contentValues.put(DBContract.COLUMN_NAME_SCHEDULE_NAME, scheduleDTO.getSchedule_name());
@@ -61,7 +60,7 @@ public class ScheduleDAO implements ScheduleDAOInt {
     }
 
     @Override
-    public boolean updateTrip(ScheduleDTO scheduleDTO) {
+    public boolean updateSchedule(ScheduleDTO scheduleDTO) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBContract.COLUMN_NAME_SCHEDULE_TRIP_ID, scheduleDTO.getSchedule_trip_id());
         contentValues.put(DBContract.COLUMN_NAME_SCHEDULE_NAME, scheduleDTO.getSchedule_name());
@@ -79,7 +78,7 @@ public class ScheduleDAO implements ScheduleDAOInt {
     }
 
     @Override
-    public boolean deleteTrip(int id) {
+    public boolean deleteSchedule(int id) {
         String condition = DBContract.COLUMN_NAME_SCHEDULE_ID + "= ?";
         String[] param = new String[]{String.valueOf(id)};
         int delete_schedule = database.delete(DBContract.TABLE_NAME_SCHEDULE, condition, param);
@@ -98,10 +97,62 @@ public class ScheduleDAO implements ScheduleDAOInt {
     }
 
     @Override
-    public List<ScheduleDTO> getScedulesOfTrip(int trip_id) {
+    public List<ScheduleDTO> getSchedulesForDate(int trip_id, int year, int month, int day) {
+        List<ScheduleDTO> schedules = new ArrayList<>();
+        String condition = DBContract.COLUMN_NAME_SCHEDULE_TRIP_ID + "= ? AND "
+                + DBContract.COLUMN_NAME_SCHEDULE_DATE_YEAR + "= ? AND "
+                + DBContract.COLUMN_NAME_SCHEDULE_DATE_MONTH + "= ? AND "
+                + DBContract.COLUMN_NAME_SCHEDULE_DATE_DAY + "= ?";
+        String[] param = new String[]{String.valueOf(trip_id), String.valueOf(year), String.valueOf(month), String.valueOf(day)};
+        Cursor cursor = database.query(DBContract.TABLE_NAME_SCHEDULE,
+                null, condition, param, null, null, null);
+        while (cursor.moveToNext()) {
+            ScheduleDTO scheduleDTO = new ScheduleDTO();
+            scheduleDTO.setSchedule_id(cursor.getInt(0));
+            scheduleDTO.setSchedule_trip_id(cursor.getInt(1));
+            scheduleDTO.setSchedule_name(cursor.getString(2));
+            scheduleDTO.setSchedule_date_year(cursor.getInt(3));
+            scheduleDTO.setSchedule_date_month(cursor.getInt(4));
+            scheduleDTO.setSchedule_date_day(cursor.getInt(5));
+            scheduleDTO.setSchedule_hour(cursor.getInt(6));
+            scheduleDTO.setSchedule_minute(cursor.getInt(7));
+            schedules.add(scheduleDTO);
+        }
+
+        cursor.close();
+        return schedules;
+    }
+
+    @Override
+    public List<ScheduleDTO> getSchedulesOfTrip(int trip_id) {
         List<ScheduleDTO> schedules = new ArrayList<>();
 
-        Cursor cursor = database.query(DBContract.TABLE_NAME_SCHEDULE,null, null, null, null, null, null);
+        String condition = DBContract.COLUMN_NAME_SCHEDULE_TRIP_ID + "= ?";
+        String[] param = new String[]{String.valueOf(trip_id)};
+        Cursor cursor = database.query(DBContract.TABLE_NAME_SCHEDULE,
+                null, condition, param, null, null, null);
+
+        while(cursor.moveToNext()) {
+            ScheduleDTO scheduleDTO = new ScheduleDTO();
+            scheduleDTO.setSchedule_id(cursor.getInt(0));
+            scheduleDTO.setSchedule_trip_id(cursor.getInt(1));
+            scheduleDTO.setSchedule_name(cursor.getString(2));
+            scheduleDTO.setSchedule_date_year(cursor.getInt(3));
+            scheduleDTO.setSchedule_date_month(cursor.getInt(4));
+            scheduleDTO.setSchedule_date_day(cursor.getInt(5));
+            scheduleDTO.setSchedule_hour(cursor.getInt(6));
+            scheduleDTO.setSchedule_minute(cursor.getInt(7));
+            schedules.add(scheduleDTO);
+        }
+
+        cursor.close();
+        return schedules;
+    }
+
+    public List<ScheduleDTO> getSchedules() {
+        List<ScheduleDTO> schedules = new ArrayList<>();
+        Cursor cursor = database.query(DBContract.TABLE_NAME_SCHEDULE,
+                null, null, null, null, null, null);
 
         while(cursor.moveToNext()) {
             ScheduleDTO scheduleDTO = new ScheduleDTO();

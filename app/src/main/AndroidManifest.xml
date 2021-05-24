@@ -30,7 +30,7 @@
         <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.Sign_up" />
         <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.MenuActivity" />
         <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.AddTripActivity" />
-        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.TripListActivitiy" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.TripListActivity" />
         <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.ScheduleListActivity" />
         <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.AddScheduleActivity" />
 

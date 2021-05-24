@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@mipmap/pbackground"
-    tools:context="kr.ac.jbnu.mobileAppProgramming.group10.TripListActivitiy">
+    tools:context="kr.ac.jbnu.mobileAppProgramming.group10.TripListActivity">
 
     <TextView
         android:layout_width="wrap_content"

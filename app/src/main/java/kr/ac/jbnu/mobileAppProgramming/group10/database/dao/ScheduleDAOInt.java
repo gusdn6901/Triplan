@@ -7,13 +7,15 @@ import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
 public interface ScheduleDAOInt {
     ScheduleDTO getSchedule(int schedule_id);
 
-    boolean insertTrip(ScheduleDTO scheduleDTO);
+    boolean insertSchedule(ScheduleDTO scheduleDTO);
 
-    boolean updateTrip(ScheduleDTO scheduleDTO);
+    boolean updateSchedule(ScheduleDTO scheduleDTO);
 
-    boolean deleteTrip(int id);
+    boolean deleteSchedule(int id);
 
     int numberOfSchedule();
 
-    List<ScheduleDTO> getScedulesOfTrip(int trip_id);
+    List<ScheduleDTO> getSchedulesForDate(int trip_id, int year, int month, int day);
+
+    List<ScheduleDTO> getSchedulesOfTrip(int trip_id);
 }

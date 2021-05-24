@@ -9,11 +9,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
+
 public class ScheduleNextAdapter extends RecyclerView.Adapter<ScheduleNextAdapter.ScheduleNextViewHolder> {
     private Context context;
-    private List<String> schedules;
+    private List<ScheduleDTO> schedules;
 
-    ScheduleNextAdapter(Context context, List<String> schedules) {
+    ScheduleNextAdapter(Context context, List<ScheduleDTO> schedules) {
         this.context = context;
         this.schedules = schedules;
     }
@@ -27,9 +29,9 @@ public class ScheduleNextAdapter extends RecyclerView.Adapter<ScheduleNextAdapte
 
     @Override
     public void onBindViewHolder(ScheduleNextViewHolder holder, int position) {
-        holder.nextScheduleList_hourText.setText(schedules.get(position));
-        holder.nextScheduleList_minuteText.setText(schedules.get(position));
-        holder.nextScheduleList_scheduleText.setText(schedules.get(position));
+        holder.nextScheduleList_hourText.setText(String.valueOf(schedules.get(position).getSchedule_hour()));
+        holder.nextScheduleList_minuteText.setText(String.valueOf(schedules.get(position).getSchedule_minute()));
+        holder.nextScheduleList_scheduleText.setText(String.valueOf(schedules.get(position).getSchedule_name()));
     }
 
     @Override

@@ -1,6 +1,8 @@
 package kr.ac.jbnu.mobileAppProgramming.group10.database.dto2;
 
-public class ScheduleDTO {
+import android.support.annotation.NonNull;
+
+public class ScheduleDTO implements Comparable<ScheduleDTO> {
     private Integer schedule_id;
     private Integer schedule_trip_id;
     private String schedule_name;
@@ -39,4 +41,22 @@ public class ScheduleDTO {
     public void setSchedule_date_day(Integer schedule_date_day) { this.schedule_date_day = schedule_date_day; }
     public void setSchedule_hour(Integer schedule_hour) { this.schedule_hour = schedule_hour; }
     public void setSchedule_minute(Integer schedule_minute) { this.schedule_minute = schedule_minute; }
+
+
+    @Override
+    public int compareTo(@NonNull ScheduleDTO o) {
+        if(this.schedule_hour > o.schedule_hour) {
+            return 1;
+        } else if(this.schedule_hour < o.schedule_hour) {
+            return -1;
+        } else {
+            if(this.schedule_minute > o.schedule_minute) {
+                return 1;
+            } else if(this.schedule_minute < o.schedule_minute) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    }
 }

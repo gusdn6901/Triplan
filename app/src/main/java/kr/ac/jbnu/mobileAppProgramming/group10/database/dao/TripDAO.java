@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBContract;
@@ -130,6 +131,17 @@ public class TripDAO implements TripDAOInt {
     }
 
     @Override
+    public void resetCurrentTrip() {
+        List<TripDTO> trips = getAllTrips();
+        Iterator<TripDTO> iter = trips.iterator();
+        while(iter.hasNext()) {
+            TripDTO trip = iter.next();
+            trip.setTrip_is_current(0);
+            updateTrip(trip);
+        }
+    }
+
+    @Override
     public TripDTO getCurrentTrip() {
         TripDTO tripDTO = new TripDTO();
         String condition = DBContract.COLUMN_NAME_TRIP_IS_CURRENT + "= 1";
@@ -174,6 +186,6 @@ public class TripDAO implements TripDAOInt {
         }
 
         cursor.close();
-        return null;
+        return trips;
     }
 }

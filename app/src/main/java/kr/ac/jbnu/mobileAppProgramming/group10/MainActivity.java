@@ -8,6 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import java.util.List;
+
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
+
 public class MainActivity extends AppCompatActivity {
 
     private static int splash_Time_Out = 3000;
@@ -19,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         splashScreen = findViewById(R.id.splashScreen);
-        sharedPref = getSharedPreferences("userdata", Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences("currentTrip", Context.MODE_PRIVATE);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -37,7 +44,14 @@ public class MainActivity extends AppCompatActivity {
 //                    startActivity(intent);
 //                    finish();
 //                }
+                int tripId = sharedPref.getInt("tripId", -1);
+                if(tripId != -1) {
+                    ScheduleDAO scheduleDAO = new ScheduleDAO(MainActivity.this);
+                    List<ScheduleDTO> schedules = scheduleDAO.getSchedulesOfTrip(tripId);
+                }
+
                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                intent.putExtra("tripId", tripId);
                 startActivity(intent);
                 finish();
             }

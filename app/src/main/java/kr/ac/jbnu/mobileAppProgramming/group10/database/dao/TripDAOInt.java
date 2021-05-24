@@ -17,6 +17,9 @@ public interface TripDAOInt {
 
     int numberOfTrip();
 
+    void resetCurrentTrip();
+
     TripDTO getCurrentTrip();
+
     List<TripDTO> getAllTrips();
 }
