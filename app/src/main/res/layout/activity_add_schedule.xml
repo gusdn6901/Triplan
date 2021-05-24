@@ -32,7 +32,7 @@
         android:src="@mipmap/line"
         android:layout_gravity="center"/>
     <EditText
-        android:id="@+id/add_trip_startDateText"
+        android:id="@+id/addSchedule_dateText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -47,10 +47,8 @@
         android:textAlignment="center"
         android:gravity="center_horizontal" />
 
-
-
     <EditText
-        android:id="@+id/editClock"
+        android:id="@+id/addSchedule_timeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -67,7 +65,7 @@
         android:textColor="#ffffff"/>
 
     <EditText
-        android:id="@+id/add_trip_locationText"
+        android:id="@+id/addSchedule_locationText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -87,7 +85,7 @@
         android:layout_marginBottom="50dp"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/add_trip_completeBtn"
+            android:id="@+id/addSchedule_completeBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -96,18 +94,19 @@
             android:layout_weight="0.5"
             android:gravity="center"
             android:text="완료"
+            android:onClick="clickAddScheduleCompleteBtn"
             android:background="@drawable/circle_button"
 
             />
         <Button
-            android:id="@+id/add_trip_cancelBtn"
+            android:id="@+id/addSchedule_cancelBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="0.5"
             android:text="취소"
-            android:onClick="clickCancelBtn"
+            android:onClick="clickAddScheduleCancelBtn"
             android:background="@drawable/circle_button"/>
     </LinearLayout>
 

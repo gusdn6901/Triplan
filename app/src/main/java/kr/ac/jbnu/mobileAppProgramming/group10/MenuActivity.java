@@ -16,4 +16,8 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(MenuActivity.this, AddTripActivity.class);
         startActivity(intent);
     }
+    public void clickTripListBtn(View view) {
+        Intent intent = new Intent(MenuActivity.this, TripListActivitiy.class);
+        startActivity(intent);
+    }
 }

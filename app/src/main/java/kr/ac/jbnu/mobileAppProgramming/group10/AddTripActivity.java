@@ -1,6 +1,7 @@
 package kr.ac.jbnu.mobileAppProgramming.group10;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -79,7 +80,10 @@ public class AddTripActivity extends AppCompatActivity {
         add_trip_endDateText.setText(sdf.format(endCalendar.getTime()));
     }
 
-    public void clickCancelBtn(View view) {
+    public void clickAddTripCompleteBtn(View view) {
+        Intent intent = new Intent(AddTripActivity.this, ScheduleListActivity.class);
+        startActivity(intent);
         finish();
     }
+    public void clickCancelBtn(View view) { finish(); }
 }

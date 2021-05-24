@@ -123,6 +123,7 @@
             android:layout_weight="0.5"
             android:gravity="center"
             android:text="완료"
+            android:onClick="clickAddTripCompleteBtn"
             android:background="@drawable/circle_button"
 
             />
