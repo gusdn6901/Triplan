@@ -1,46 +1,27 @@
 package kr.ac.jbnu.mobileAppProgramming.group10;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.amitshekhar.DebugDB;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.daoimpl.ProfileDAOImpl;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.daoimpl.TripDAOImpl;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ProfileDTO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
 
 public class AddScheduleActivity extends AppCompatActivity {
     EditText addSchedule_dateText, addSchedule_timeText, addSchedule_scheduleText;
-    public int hours = 2;
+    public int hours;
     public int minutes;
     int years, months, days;
     Calendar scheduleCalendar = Calendar.getInstance();
@@ -112,6 +93,9 @@ public class AddScheduleActivity extends AppCompatActivity {
     }
 
     public void clickAddScheduleCompleteBtn(View view) {
+        TripDAO tripDAO = new TripDAO(this);
+        TripDTO tripDTO = tripDAO.getTrip(getIntent().getIntExtra("tripId", -1));
+
         if(addSchedule_dateText.getText().toString().equals("")) {
             Toast.makeText(this, "날짜를 입력하세요", Toast.LENGTH_SHORT).show();
             addSchedule_dateText.requestFocus();
@@ -121,6 +105,15 @@ public class AddScheduleActivity extends AppCompatActivity {
         } else if(addSchedule_scheduleText.getText().toString().equals("")) {
             Toast.makeText(this, "일정을 입력하세요", Toast.LENGTH_SHORT).show();
             addSchedule_scheduleText.requestFocus();
+        } else if(tripDTO.getTrip_start_date_year() > years || tripDTO.getTrip_end_date_year() < years) {
+            Toast.makeText(this, "날짜가 여행 일시에서 벗어났습니다.", Toast.LENGTH_SHORT).show();
+            addSchedule_dateText.requestFocus();
+        } else if(tripDTO.getTrip_start_date_month() > months || tripDTO.getTrip_end_date_month() < months) {
+            Toast.makeText(this, "날짜가 여행 일시에서 벗어났습니다.", Toast.LENGTH_SHORT).show();
+            addSchedule_dateText.requestFocus();
+        } else if(tripDTO.getTrip_start_date_day() > days || tripDTO.getTrip_end_date_day() < days) {
+            Toast.makeText(this, "날짜가 여행 일시에서 벗어났습니다.", Toast.LENGTH_SHORT).show();
+            addSchedule_dateText.requestFocus();
         } else {
             ScheduleDTO schedule = new ScheduleDTO();
             schedule.setSchedule_name(addSchedule_scheduleText.getText().toString());
