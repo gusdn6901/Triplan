@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/App-Triplan.iml" filepath="$PROJECT_DIR$/.idea/modules/App-Triplan.iml" group="Triplan" />
+      <module fileurl="file://$PROJECT_DIR$/EasyTripPlanner.iml" filepath="$PROJECT_DIR$/EasyTripPlanner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Triplan.iml" filepath="$PROJECT_DIR$/.idea/modules/Triplan.iml" group="Triplan" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Triplan-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Triplan-app.iml" group="Triplan/app" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Triplan/app" />
+    </modules>
+  </component>
+</project>

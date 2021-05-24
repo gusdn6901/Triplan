@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/pbackground"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:scrollbars="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="kr.ac.jbnu.mobileAppProgramming.group10.AddTripActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Schedule"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:layout_marginTop="70dp"
+        />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/line"
+        android:layout_gravity="center"/>
+    <EditText
+        android:id="@+id/add_trip_startDateText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="90dp"
+        android:clickable="true"
+        android:editable="false"
+        android:focusable="true"
+        android:hint="날짜"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
+
+
+
+    <EditText
+        android:id="@+id/editClock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:editable="false"
+        android:focusable="true"
+        android:hint="시간 추가"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"/>
+
+    <EditText
+        android:id="@+id/add_trip_locationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="40dp"
+        android:hint="장소"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:inputType="textCapSentences"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/add_trip_completeBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="완료"
+            android:background="@drawable/circle_button"
+
+            />
+        <Button
+            android:id="@+id/add_trip_cancelBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.5"
+            android:text="취소"
+            android:onClick="clickCancelBtn"
+            android:background="@drawable/circle_button"/>
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>
+</LinearLayout>

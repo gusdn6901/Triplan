@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="kr.ac.jbnu.mobileAppProgramming.group10">
+
+    <!-- Permission required to draw floating widget over other apps -->
+
+    <uses-permission android:name="android.permission.ACTION_MANAGE_OVERLAY_PERMISSION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY"/>
+
+    <application
+        android:allowBackup="true"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.Log_in" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.Sign_up" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.MenuActivity" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.AddTripActivity" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.TripListActivitiy" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.ScheduleListActivity" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.AddScheduleActivity" />
+
+
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.Home" />
+        <activity
+            android:name="kr.ac.jbnu.mobileAppProgramming.group10.NavigatonDrawer"
+            android:label="@string/title_activity_navigaton_drawer"
+            android:theme="@style/AppTheme" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.history_details" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.History_Main" />
+
+
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.ProfileActivity" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.AddTrip" />
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.DetailsActivity" />
+        <activity
+            android:name="kr.ac.jbnu.mobileAppProgramming.group10.AlertActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
+            android:theme="@style/Base.Theme.AppCompat.Dialog" />
+
+        <receiver
+            android:name="kr.ac.jbnu.mobileAppProgramming.group10.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name="kr.ac.jbnu.mobileAppProgramming.group10.RingtonePlayingService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="kr.ac.jbnu.mobileAppProgramming.group10.FloatingWidgetService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.AboutActivity"></activity>
+    </application>
+
+</manifest>
