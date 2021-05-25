@@ -13,6 +13,8 @@ public interface ScheduleDAOInt {
 
     boolean deleteSchedule(int id);
 
+    boolean deleteScheduleByTrip(int trip_id);
+
     int numberOfSchedule();
 
     List<ScheduleDTO> getSchedulesForDate(int trip_id, int year, int month, int day);

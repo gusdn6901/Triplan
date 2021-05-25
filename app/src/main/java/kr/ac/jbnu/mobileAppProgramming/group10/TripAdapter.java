@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
 
@@ -55,32 +56,60 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         holder.trip_currentTripBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("현재 여행 설정").setMessage("현재 진행중인 여행으로 선택하시겠습니까?");
-                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences sharedPreferences = context.getSharedPreferences("currentTrip", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt("tripId", trips.get(position).getTrip_id());
-                        editor.commit();
+                if(trips.get(position).getTrip_is_current() == 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("현재 여행 설정").setMessage("현재 진행중인 여행으로 선택하시겠습니까?");
+                    builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SharedPreferences sharedPreferences = context.getSharedPreferences("currentTrip", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("tripId", trips.get(position).getTrip_id());
+                            editor.commit();
 
-                        TripDAO tripDAO = new TripDAO(context);
-                        tripDAO.resetCurrentTrip();
+                            TripDAO tripDAO = new TripDAO(context);
+                            tripDAO.resetCurrentTrip();
 
-                        TripDTO trip = trips.get(position);
-                        trip.setTrip_is_current(1);
-                        tripDAO.updateTrip(trip);
-                    }
-                });
-                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                            TripDTO trip = trips.get(position);
+                            trip.setTrip_is_current(1);
+                            tripDAO.updateTrip(trip);
+                        }
+                    });
+                    builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("현재 여행 설정").setMessage("현재 여행에서 해제하시겠습니까?");
+                    builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SharedPreferences sharedPreferences = context.getSharedPreferences("currentTrip", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("tripId", -1);
+                            editor.commit();
+
+                            TripDAO tripDAO = new TripDAO(context);
+                            tripDAO.resetCurrentTrip();
+
+                            TripDTO trip = trips.get(position);
+                            trip.setTrip_is_current(0);
+                            tripDAO.updateTrip(trip);
+                        }
+                    });
+                    builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
             }
         });
         holder.trip_deleteBtn.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +122,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                     public void onClick(DialogInterface dialog, int which) {
                         TripDAO tripDAO = new TripDAO(context);
                         tripDAO.deleteTrip(trips.get(position).getTrip_id());
+                        ScheduleDAO scheduleDAO = new ScheduleDAO(context);
+                        scheduleDAO.deleteScheduleByTrip(trips.get(position).getTrip_id());
                         ((Activity)context).startActivity(((Activity)context).getIntent());
                         ((Activity)context).finish();
                     }

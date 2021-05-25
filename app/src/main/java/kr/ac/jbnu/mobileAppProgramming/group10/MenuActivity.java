@@ -23,13 +23,14 @@ public class MenuActivity extends AppCompatActivity {
         menu_text_current_next = findViewById(R.id.menu_text_current_next);
 
         int tripId = getIntent().getIntExtra("tripId", -1);
-        String prevSchedule = getIntent().getStringExtra("prevSchedule");
-        String currentSchedule = getIntent().getStringExtra("currentSchedule");
-        String nextSchedule = getIntent().getStringExtra("nextSchedule");
         if(tripId == -1) {
             menu_text_noneCurrent.setVisibility(View.VISIBLE);
             menu_current_layout.setVisibility(View.GONE);
         } else {
+            String prevSchedule = getIntent().getStringExtra("prevSchedule");
+            String currentSchedule = getIntent().getStringExtra("currentSchedule");
+            String nextSchedule = getIntent().getStringExtra("nextSchedule");
+
             menu_text_current_prev.setText(prevSchedule);
             menu_text_current_current.setText(currentSchedule);
             menu_text_current_next.setText(nextSchedule);

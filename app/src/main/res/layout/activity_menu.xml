@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context="kr.ac.jbnu.mobileAppProgramming.group10.MenuActivity"
     android:orientation="vertical"
+    android:background="@mipmap/back"
     android:weightSum="3">
 
     <ImageView

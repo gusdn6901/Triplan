@@ -87,6 +87,15 @@ public class ScheduleDAO implements ScheduleDAOInt {
     }
 
     @Override
+    public boolean deleteScheduleByTrip(int trip_id) {
+        String condition = DBContract.COLUMN_NAME_SCHEDULE_TRIP_ID + "= ?";
+        String[] param = new String[]{String.valueOf(trip_id)};
+        int delete_schedule = database.delete(DBContract.TABLE_NAME_SCHEDULE, condition, param);
+
+        return delete_schedule == 1;
+    }
+
+    @Override
     public int numberOfSchedule() {
         int count = 0;
         Cursor cursor = database.query(DBContract.TABLE_NAME_SCHEDULE,null, null, null, null, null, null);

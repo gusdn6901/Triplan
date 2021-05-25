@@ -24,29 +24,24 @@ import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
 
 public class ScheduleListActivity extends AppCompatActivity {
     TextView scheduleList_yearText, scheduleList_monthText, scheduleList_dayText;
-    RecyclerView scheduleList_prevScheduleRecyclerView, scheduleList_currentScheduleRecyclerView, scheduleList_nextScheduleRecyclerView;
+    RecyclerView scheduleList_scheduleRecyclerView;
     Button scheduleList_prevBtn, scheduleList_nextBtn;
     List<ScheduleDTO> schedules;
-    List<ScheduleDTO> prevSchedules;
-    List<ScheduleDTO> currentSchedules;
-    List<ScheduleDTO> nextSchedules;
     int year, month, day;
     int tripId;
 
-    final static int SCHEDULE_ADDED_REQUEST = 1;
+    final public static int SCHEDULE_ADDED_REQUEST = 1;
+    final public static int SCHEDULE_MODIFIED_REQUEST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_list);
         tripId = getIntent().getIntExtra("tripId", -1);
-
         scheduleList_yearText = findViewById(R.id.scheduleList_yearText);
         scheduleList_monthText = findViewById(R.id.scheduleList_monthText);
         scheduleList_dayText = findViewById(R.id.scheduleList_dayText);
-        scheduleList_prevScheduleRecyclerView = findViewById(R.id.scheduleList_prevScheduleRecyclerView);
-        scheduleList_currentScheduleRecyclerView = findViewById(R.id.scheduleList_currentScheduleRecyclerView);
-        scheduleList_nextScheduleRecyclerView = findViewById(R.id.scheduleList_nextScheduleRecyclerView);
+        scheduleList_scheduleRecyclerView = findViewById(R.id.scheduleList_scheduleRecyclerView);
         scheduleList_prevBtn = findViewById(R.id.scheduleList_prevBtn);
         scheduleList_nextBtn = findViewById(R.id.scheduleList_nextBtn);
 
@@ -65,19 +60,41 @@ public class ScheduleListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == SCHEDULE_ADDED_REQUEST && resultCode == RESULT_OK) {
+            ScheduleDTO schedule = new ScheduleDTO();
+            schedule.setSchedule_name(data.getStringExtra("name"));
+            schedule.setSchedule_trip_id(getIntent().getIntExtra("tripId", -1));
+            schedule.setSchedule_date_year(data.getIntExtra("year", 1900));
+            schedule.setSchedule_date_month(data.getIntExtra("month", 1));
+            schedule.setSchedule_date_day(data.getIntExtra("day", 1));
+            schedule.setSchedule_hour(Integer.parseInt(data.getStringExtra("time").split(":")[0]));
+            schedule.setSchedule_minute(Integer.parseInt(data.getStringExtra("time").split(":")[1]));
+
+            ScheduleDAO scheduleDAO = new ScheduleDAO(this);
+            scheduleDAO.insertSchedule(schedule);
+
             Toast.makeText(this, "일정 추가가 완료되었습니다.", Toast.LENGTH_SHORT).show();
-            prevSchedules = new ArrayList<>();
-            currentSchedules = new ArrayList<>();
-            nextSchedules = new ArrayList<>();
+            drawView();
+        } else if(requestCode == SCHEDULE_MODIFIED_REQUEST && resultCode == RESULT_OK) {
+            ScheduleDTO schedule = new ScheduleDTO();
+            schedule.setSchedule_id(data.getIntExtra("id", -1));
+            schedule.setSchedule_name(data.getStringExtra("name"));
+            schedule.setSchedule_trip_id(getIntent().getIntExtra("tripId", -1));
+            schedule.setSchedule_date_year(data.getIntExtra("year", 1900));
+            schedule.setSchedule_date_month(data.getIntExtra("month", 1));
+            schedule.setSchedule_date_day(data.getIntExtra("day", 1));
+            schedule.setSchedule_hour(Integer.parseInt(data.getStringExtra("time").split(":")[0]));
+            schedule.setSchedule_minute(Integer.parseInt(data.getStringExtra("time").split(":")[1]));
+
+            ScheduleDAO scheduleDAO = new ScheduleDAO(this);
+            scheduleDAO.updateSchedule(schedule);
+
+            Toast.makeText(this, "일정 수정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
             drawView();
         }
     }
 
     public void drawView() {
         schedules = new ArrayList<>();
-        prevSchedules = new ArrayList<>();
-        currentSchedules = new ArrayList<>();
-        nextSchedules = new ArrayList<>();
 
         TripDAO tripDAO = new TripDAO(this);
         TripDTO tripDTO = tripDAO.getTrip(tripId);
@@ -95,62 +112,11 @@ public class ScheduleListActivity extends AppCompatActivity {
 
         Collections.sort(schedules);
 
-        Date now = new Date(System.currentTimeMillis());
-        String getTime = new SimpleDateFormat("yyyy/MM/dd/HH/mm").format(now);
-        int nowYear = Integer.parseInt(getTime.split("/")[0]);
-        int nowMonth = Integer.parseInt(getTime.split("/")[1]);
-        int nowDay = Integer.parseInt(getTime.split("/")[2]);
-        int nowHour = Integer.parseInt(getTime.split("/")[3]);
-        int nowMinute = Integer.parseInt(getTime.split("/")[4]);
-        System.out.println(getTime);
-
-        Iterator<ScheduleDTO> iter = schedules.iterator();
-        while(iter.hasNext()) {
-            ScheduleDTO schedule = iter.next();
-
-            //날짜 검사
-            if(schedule.getSchedule_date_year() < nowYear)
-                prevSchedules.add(schedule);
-            else if(schedule.getSchedule_date_month() < nowMonth)
-                prevSchedules.add(schedule);
-            else if(schedule.getSchedule_date_day() < nowDay)
-                prevSchedules.add(schedule);
-            else if(schedule.getSchedule_date_year() > nowYear)
-                nextSchedules.add(schedule);
-            else if(schedule.getSchedule_date_month() > nowMonth)
-                nextSchedules.add(schedule);
-            else if(schedule.getSchedule_date_day() > nowDay)
-                nextSchedules.add(schedule);
-            //시간 검사
-            else if(schedule.getSchedule_hour() < nowHour)
-                prevSchedules.add(schedule);
-            else if(schedule.getSchedule_hour() > nowHour)
-                nextSchedules.add(schedule);
-            else if(schedule.getSchedule_minute() < nowMinute)
-                prevSchedules.add(schedule);
-            else if(schedule.getSchedule_minute() > nowMinute)
-                nextSchedules.add(schedule);
-            else
-                currentSchedules.add(schedule);
-        }
-
-        scheduleList_prevScheduleRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager lm1 = new LinearLayoutManager(this);
-        scheduleList_prevScheduleRecyclerView.setLayoutManager(lm1);
-        SchedulePrevAdapter schedulePrevAdapter = new SchedulePrevAdapter(ScheduleListActivity.this, prevSchedules);
-        scheduleList_prevScheduleRecyclerView.setAdapter(schedulePrevAdapter);
-
-        scheduleList_currentScheduleRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager lm2 = new LinearLayoutManager(this);
-        scheduleList_currentScheduleRecyclerView.setLayoutManager(lm2);
-        ScheduleCurrentAdapter scheduleCurrentAdapter = new ScheduleCurrentAdapter(ScheduleListActivity.this, currentSchedules);
-        scheduleList_currentScheduleRecyclerView.setAdapter(scheduleCurrentAdapter);
-
-        scheduleList_nextScheduleRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager lm3 = new LinearLayoutManager(this);
-        scheduleList_nextScheduleRecyclerView.setLayoutManager(lm3);
-        ScheduleNextAdapter scheduleNextAdapter = new ScheduleNextAdapter(ScheduleListActivity.this, nextSchedules);
-        scheduleList_nextScheduleRecyclerView.setAdapter(scheduleNextAdapter);
+        scheduleList_scheduleRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        scheduleList_scheduleRecyclerView.setLayoutManager(layoutManager);
+        ScheduleAdapter schedulePrevAdapter = new ScheduleAdapter(ScheduleListActivity.this, schedules);
+        scheduleList_scheduleRecyclerView.setAdapter(schedulePrevAdapter);
     }
 
     public void clickScheduleListPrevBtn(View view) {

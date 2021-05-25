@@ -79,25 +79,11 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/scheduleList_prevScheduleRecyclerView"
+        android:id="@+id/scheduleList_scheduleRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         app:layout_constraintTop_toBottomOf="@+id/scheduleList_dateLayout"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/scheduleList_currentScheduleRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleList_prevScheduleRecyclerView"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/scheduleList_nextScheduleRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleList_currentScheduleRecyclerView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 

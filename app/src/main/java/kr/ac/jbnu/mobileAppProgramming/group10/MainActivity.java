@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import java.util.Iterator;
 import java.util.List;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
@@ -48,12 +49,20 @@ public class MainActivity extends AppCompatActivity {
                 if(tripId != -1) {
                     ScheduleDAO scheduleDAO = new ScheduleDAO(MainActivity.this);
                     List<ScheduleDTO> schedules = scheduleDAO.getSchedulesOfTrip(tripId);
-                }
+                    Iterator<ScheduleDTO> iter = schedules.iterator();
+//                    while(iter.hasNext()) {
+//
+//                    }
 
-                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                intent.putExtra("tripId", tripId);
-                startActivity(intent);
-                finish();
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    intent.putExtra("tripId", tripId);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
 
         }, splash_Time_Out);

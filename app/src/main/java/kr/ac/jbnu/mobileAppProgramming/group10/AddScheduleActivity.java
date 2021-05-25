@@ -2,6 +2,7 @@ package kr.ac.jbnu.mobileAppProgramming.group10;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,6 +34,19 @@ public class AddScheduleActivity extends AppCompatActivity {
         addSchedule_dateText = findViewById(R.id.addSchedule_dateText);
         addSchedule_timeText = findViewById(R.id.addSchedule_timeText);
         addSchedule_scheduleText = findViewById(R.id.addSchedule_scheduleText);
+
+        if(getIntent().getBooleanExtra("isModify", false)) {
+            int yearText = getIntent().getIntExtra("year", 0);
+            int monthText = getIntent().getIntExtra("month", 0);
+            int dayText = getIntent().getIntExtra("day", 0);
+            int hourText = getIntent().getIntExtra("hour", 0);
+            int minuteText = getIntent().getIntExtra("minute", -1);
+            String scheduleText = getIntent().getStringExtra("name");
+
+            addSchedule_dateText.setText(yearText + "/" + monthText + "/" + dayText);
+            addSchedule_timeText.setText(hourText + ":" + minuteText);
+            addSchedule_scheduleText.setText(scheduleText);
+        }
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -88,13 +102,16 @@ public class AddScheduleActivity extends AppCompatActivity {
 
     private void updateLabel() {
         String myFormat = "yyyy/MM/dd"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
         addSchedule_dateText.setText(sdf.format(scheduleCalendar.getTime()));
     }
 
     public void clickAddScheduleCompleteBtn(View view) {
         TripDAO tripDAO = new TripDAO(this);
         TripDTO tripDTO = tripDAO.getTrip(getIntent().getIntExtra("tripId", -1));
+        int yearText = Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[0]);
+        int monthText = Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[1]);
+        int dayText = Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[2]);
 
         if(addSchedule_dateText.getText().toString().equals("")) {
             Toast.makeText(this, "날짜를 입력하세요", Toast.LENGTH_SHORT).show();
@@ -105,29 +122,24 @@ public class AddScheduleActivity extends AppCompatActivity {
         } else if(addSchedule_scheduleText.getText().toString().equals("")) {
             Toast.makeText(this, "일정을 입력하세요", Toast.LENGTH_SHORT).show();
             addSchedule_scheduleText.requestFocus();
-        } else if(tripDTO.getTrip_start_date_year() > years || tripDTO.getTrip_end_date_year() < years) {
+        } else if(tripDTO.getTrip_start_date_year() > yearText || tripDTO.getTrip_end_date_year() < yearText) {
             Toast.makeText(this, "날짜가 여행 일시에서 벗어났습니다.", Toast.LENGTH_SHORT).show();
             addSchedule_dateText.requestFocus();
-        } else if(tripDTO.getTrip_start_date_month() > months || tripDTO.getTrip_end_date_month() < months) {
+        } else if(tripDTO.getTrip_start_date_month() > monthText || tripDTO.getTrip_end_date_month() < monthText) {
             Toast.makeText(this, "날짜가 여행 일시에서 벗어났습니다.", Toast.LENGTH_SHORT).show();
             addSchedule_dateText.requestFocus();
-        } else if(tripDTO.getTrip_start_date_day() > days || tripDTO.getTrip_end_date_day() < days) {
+        } else if(tripDTO.getTrip_start_date_day() > dayText || tripDTO.getTrip_end_date_day() < dayText) {
             Toast.makeText(this, "날짜가 여행 일시에서 벗어났습니다.", Toast.LENGTH_SHORT).show();
             addSchedule_dateText.requestFocus();
         } else {
-            ScheduleDTO schedule = new ScheduleDTO();
-            schedule.setSchedule_name(addSchedule_scheduleText.getText().toString());
-            schedule.setSchedule_trip_id(getIntent().getIntExtra("tripId", -1));
-            schedule.setSchedule_date_year(Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[0]));
-            schedule.setSchedule_date_month(Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[1]));
-            schedule.setSchedule_date_day(Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[2]));
-            schedule.setSchedule_hour(Integer.parseInt(addSchedule_timeText.getText().toString().split(":")[0]));
-            schedule.setSchedule_minute(Integer.parseInt(addSchedule_timeText.getText().toString().split(":")[1]));
-
-            ScheduleDAO scheduleDAO = new ScheduleDAO(this);
-            scheduleDAO.insertSchedule(schedule);
-
-            setResult(RESULT_OK);
+            Intent data = new Intent();
+            data.putExtra("id", getIntent().getIntExtra("scheduleId", -1));
+            data.putExtra("name", addSchedule_scheduleText.getText().toString());
+            data.putExtra("year", yearText);
+            data.putExtra("month", monthText);
+            data.putExtra("day", dayText);
+            data.putExtra("time", addSchedule_timeText.getText().toString());
+            setResult(RESULT_OK, data);
             finish();
         }
     }
