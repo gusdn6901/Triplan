@@ -94,6 +94,7 @@ public class TripDAO implements TripDAOInt {
     @Override
     public boolean updateTrip(TripDTO tripDTO) {
         ContentValues contentValues = new ContentValues();
+        contentValues.put(DBContract.COLUMN_NAME_TRIP_ID, tripDTO.getTrip_id());
         contentValues.put(DBContract.COLUMN_NAME_TRIP_NAME, tripDTO.getTrip_name());
         contentValues.put(DBContract.COLUMN_NAME_TRIP_LOCATION, tripDTO.getTrip_location());
         contentValues.put(DBContract.COLUMN_NAME_TRIP_START_DATE_YEAR, tripDTO.getTrip_start_date_year());

@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.health.SystemHealthManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,7 +39,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         return viewHolder;
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(ScheduleViewHolder holder, int position) {
         final ScheduleDTO schedule = schedules.get(position);
@@ -87,7 +88,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         TripDAO tripDAO = new TripDAO(context);
         if(tripDAO.getCurrentTrip().getTrip_id() == null)
             return;
-        else if(tripDAO.getCurrentTrip().getTrip_id() == ((Activity)context).getIntent().getIntExtra("tripId", -1))
+        else if(tripDAO.getCurrentTrip().getTrip_id() != ((Activity)context).getIntent().getIntExtra("tripId", -1))
             return;
 
         Date now = new Date(System.currentTimeMillis());
@@ -122,38 +123,33 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             prevSchedule = schedule;
         else if(schedule.getSchedule_minute() > nowMinute)
             nextSchedule = schedule;
+        else
+            prevSchedule = schedule;
 
         if(prevSchedule == null) {
-            holder.scheduleList_hourText.setTextColor(R.color.blue);
-            holder.scheduleList_middleText.setTextColor(R.color.blue);
-            holder.scheduleList_minuteText.setTextColor(R.color.blue);
-            holder.scheduleList_scheduleText.setTextColor(R.color.blue);
+            holder.scheduleList_hourText.setTextColor(Color.BLUE);
+            holder.scheduleList_middleText.setTextColor(Color.BLUE);
+            holder.scheduleList_minuteText.setTextColor(Color.BLUE);
+            holder.scheduleList_scheduleText.setTextColor(Color.BLUE);
         } else {
-            if(nextSchedule == null) {
-                holder.scheduleList_hourText.setTextColor(R.color.red);
-                holder.scheduleList_middleText.setTextColor(R.color.red);
-                holder.scheduleList_minuteText.setTextColor(R.color.red);
-                holder.scheduleList_scheduleText.setTextColor(R.color.red);
+            if(schedule.getSchedule_date_year() != nowYear || schedule.getSchedule_date_month() != nowMonth || schedule.getSchedule_date_day() != nowDay)
+                return;
+            else if(schedules.size() == (position+1)) {
+                holder.scheduleList_hourText.setTextColor(Color.RED);
+                holder.scheduleList_middleText.setTextColor(Color.RED);
+                holder.scheduleList_minuteText.setTextColor(Color.RED);
+                holder.scheduleList_scheduleText.setTextColor(Color.RED);
             } else {
-                if(schedule.getSchedule_date_year() != nowYear || schedule.getSchedule_date_month() != nowMonth || schedule.getSchedule_date_day() != nowDay)
-                    return;
-                else if(schedules.size() == (position+1)) {
-                    holder.scheduleList_hourText.setTextColor(R.color.red);
-                    holder.scheduleList_middleText.setTextColor(R.color.red);
-                    holder.scheduleList_minuteText.setTextColor(R.color.red);
-                    holder.scheduleList_scheduleText.setTextColor(R.color.red);
-                } else {
-                    if(schedules.get(position+1).getSchedule_hour() > nowHour) {
-                        holder.scheduleList_hourText.setTextColor(R.color.red);
-                        holder.scheduleList_middleText.setTextColor(R.color.red);
-                        holder.scheduleList_minuteText.setTextColor(R.color.red);
-                        holder.scheduleList_scheduleText.setTextColor(R.color.red);
-                    } else if(schedules.get(position+1).getSchedule_minute() > nowMinute) {
-                        holder.scheduleList_hourText.setTextColor(R.color.red);
-                        holder.scheduleList_middleText.setTextColor(R.color.red);
-                        holder.scheduleList_minuteText.setTextColor(R.color.red);
-                        holder.scheduleList_scheduleText.setTextColor(R.color.red);
-                    }
+                if(schedules.get(position+1).getSchedule_hour() > nowHour) {
+                    holder.scheduleList_hourText.setTextColor(Color.RED);
+                    holder.scheduleList_middleText.setTextColor(Color.RED);
+                    holder.scheduleList_minuteText.setTextColor(Color.RED);
+                    holder.scheduleList_scheduleText.setTextColor(Color.RED);
+                } else if(schedules.get(position+1).getSchedule_minute() > nowMinute) {
+                    holder.scheduleList_hourText.setTextColor(Color.RED);
+                    holder.scheduleList_middleText.setTextColor(Color.RED);
+                    holder.scheduleList_minuteText.setTextColor(Color.RED);
+                    holder.scheduleList_scheduleText.setTextColor(Color.RED);
                 }
             }
         }

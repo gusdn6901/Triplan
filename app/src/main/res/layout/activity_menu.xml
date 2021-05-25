@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/menu_text_current_prev"
-                android:text=""
+                android:text="없음"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/menu_text_current_current"
-                android:text=""
+                android:text="없음"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="#FF0000"
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/menu_text_current_next"
-                android:text=""
+                android:text="없음"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
@@ -107,6 +107,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/menu_currentTripBtn"
         android:layout_gravity="center"
         android:text="현재 여행"
         android:textColor="#FFFFFF"
@@ -116,7 +117,8 @@
         android:layout_weight="0.05"
         android:background="@drawable/button_design1"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        android:onClick="clickCurrentTripBtn"/>
     <Button
         android:layout_gravity="center"
         android:text="여행 추가"

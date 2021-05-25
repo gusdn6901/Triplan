@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -73,6 +74,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                             TripDTO trip = trips.get(position);
                             trip.setTrip_is_current(1);
                             tripDAO.updateTrip(trip);
+                            ((Activity)context).finish();
+                            ((Activity)context).startActivity(((Activity)context).getIntent());
                         }
                     });
                     builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
