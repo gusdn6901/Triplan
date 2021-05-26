@@ -11,12 +11,32 @@
     android:background="@mipmap/back"
     android:weightSum="3">
 
+    <ImageButton
+        android:id="@+id/menu_notificationBtn"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitCenter"
+        android:layout_gravity="right"
+        android:background="@mipmap/bell_on_icon"
+        android:onClick="clickNotificationBtn"/>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_weight="1.5"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="10dp"
         android:src="@mipmap/logo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TRIPLAN"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:textSize="35sp"
+        android:textColor="#FD5888"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_weight="0.05"
@@ -24,38 +44,42 @@
         android:layout_height="wrap_content"
         android:id="@+id/menu_text_noneCurrent"
         android:text="현재 설정된 여행이 없습니다."
-        android:textColor="#FF0000"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginTop="60dp"
         android:visibility="gone"/>
+
     <LinearLayout
         android:layout_weight="0.05"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/menu_current_layout"
         android:orientation="vertical"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:visibility="visible">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="60dp">
+            android:layout_marginBottom="5dp"
+            android:layout_marginHorizontal="60dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="이전 일정: "
-                android:textSize="16sp"
+                android:text="이전 일정  "
+                android:textSize="20sp"
+                android:textColor="#92FFFFFF"
                 android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/menu_text_current_prev"
                 android:text="없음"
-                android:textSize="16sp"
+                android:textColor="#92FFFFFF"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
         </LinearLayout>
@@ -63,44 +87,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="60dp">
+            android:layout_marginBottom="5dp"
+            android:layout_marginHorizontal="60dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="현재 일정: "
-                android:textSize="16sp"
+                android:text="현재 일정  "
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#FF0000"
+                android:textColor="#85FF0000"
                 android:gravity="center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/menu_text_current_current"
                 android:text="없음"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#FF0000"
+                android:textColor="#85FF0000"
                 android:gravity="center"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="60dp">
+            android:layout_marginHorizontal="60dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="다음 일정: "
-                android:textSize="16sp"
+                android:text="다음 일정  "
+                android:textSize="20sp"
                 android:textStyle="bold"
+                android:textColor="#850000FF"
                 android:gravity="center"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/menu_text_current_next"
                 android:text="없음"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
+                android:textColor="#850000FF"
                 android:gravity="center"/>
         </LinearLayout>
 

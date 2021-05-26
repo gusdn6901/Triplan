@@ -15,10 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
 public class AddScheduleActivity extends AppCompatActivity {
     EditText addSchedule_dateText, addSchedule_timeText, addSchedule_scheduleText;
@@ -60,11 +58,10 @@ public class AddScheduleActivity extends AppCompatActivity {
                 scheduleCalendar.set(Calendar.MONTH, monthOfYear);
                 scheduleCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                updateLabel();
+                updateDateLabel();
             }
         };
 
-        // when alarmDate editText is clicked
         addSchedule_dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +71,6 @@ public class AddScheduleActivity extends AppCompatActivity {
             }
         });
 
-        // click listener on alarmClock EditText
         addSchedule_timeText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,22 +82,26 @@ public class AddScheduleActivity extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(AddScheduleActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        addSchedule_timeText.setText(selectedHour + ":" + selectedMinute);
+                        String hourString = String.valueOf(selectedHour);
+                        String minuteString = String.valueOf(selectedMinute);
+                        if(selectedHour < 10) hourString = "0" + String.valueOf(selectedHour);
+                        if(selectedMinute < 10) minuteString = "0"+ String.valueOf(selectedMinute);
+                        addSchedule_timeText.setText(hourString + ":" + minuteString);
                         minutes = selectedMinute;
                         hours = selectedHour;
                         scheduleCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         scheduleCalendar.set(Calendar.MINUTE, selectedMinute - 1);
                         scheduleCalendar.set(Calendar.SECOND, 59);
                     }
-                }, hour, minute, true);//Yes 24 hour time
+                }, hour, minute, true);
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
             }
         });
     }
 
-    private void updateLabel() {
-        String myFormat = "yyyy/MM/dd"; //In which you need put here
+    private void updateDateLabel() {
+        String myFormat = "yyyy/MM/dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
         addSchedule_dateText.setText(sdf.format(scheduleCalendar.getTime()));
     }
@@ -109,10 +109,9 @@ public class AddScheduleActivity extends AppCompatActivity {
     public void clickAddScheduleCompleteBtn(View view) {
         TripDAO tripDAO = new TripDAO(this);
         TripDTO tripDTO = tripDAO.getTrip(getIntent().getIntExtra("tripId", -1));
-        int yearText = Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[0]);
-        int monthText = Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[1]);
-        int dayText = Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[2]);
-
+        int yearText = addSchedule_dateText.getText().toString().equals("") ? 0 : Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[0]);
+        int monthText = addSchedule_dateText.getText().toString().equals("") ? 0 : Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[1]);
+        int dayText = addSchedule_dateText.getText().toString().equals("") ? 0 : Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[2]);
         if(addSchedule_dateText.getText().toString().equals("")) {
             Toast.makeText(this, "날짜를 입력하세요", Toast.LENGTH_SHORT).show();
             addSchedule_dateText.requestFocus();

@@ -6,26 +6,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
 public class ScheduleListActivity extends AppCompatActivity {
     TextView scheduleList_yearText, scheduleList_monthText, scheduleList_dayText;
     RecyclerView scheduleList_scheduleRecyclerView;
-    Button scheduleList_prevBtn, scheduleList_nextBtn;
+    ImageButton scheduleList_prevBtn, scheduleList_nextBtn;
     List<ScheduleDTO> schedules;
     int year, month, day;
     int tripId;

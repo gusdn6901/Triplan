@@ -26,49 +26,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.Log_in" />
-        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.Sign_up" />
         <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.MenuActivity" />
         <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.AddTripActivity" />
         <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.TripListActivity" />
         <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.ScheduleListActivity" />
         <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.AddScheduleActivity" />
 
-
-        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.Home" />
-        <activity
-            android:name="kr.ac.jbnu.mobileAppProgramming.group10.NavigatonDrawer"
-            android:label="@string/title_activity_navigaton_drawer"
-            android:theme="@style/AppTheme" />
-        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.history_details" />
-        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.History_Main" />
-
-
-        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.ProfileActivity" />
-        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.AddTrip" />
-        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.DetailsActivity" />
-        <activity
-            android:name="kr.ac.jbnu.mobileAppProgramming.group10.AlertActivity"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
-            android:taskAffinity=""
-            android:theme="@style/Base.Theme.AppCompat.Dialog" />
-
         <receiver
-            android:name="kr.ac.jbnu.mobileAppProgramming.group10.AlarmReceiver"
+            android:name="kr.ac.jbnu.mobileAppProgramming.group10.TimeReceiver"
             android:enabled="true"
             android:exported="false" />
 
         <service
-            android:name="kr.ac.jbnu.mobileAppProgramming.group10.RingtonePlayingService"
+            android:name="kr.ac.jbnu.mobileAppProgramming.group10.NotificationService"
             android:enabled="true"
             android:exported="true" />
-        <service
-            android:name="kr.ac.jbnu.mobileAppProgramming.group10.FloatingWidgetService"
-            android:enabled="true"
-            android:exported="true" />
-
-        <activity android:name="kr.ac.jbnu.mobileAppProgramming.group10.AboutActivity"></activity>
     </application>
 
 </manifest>

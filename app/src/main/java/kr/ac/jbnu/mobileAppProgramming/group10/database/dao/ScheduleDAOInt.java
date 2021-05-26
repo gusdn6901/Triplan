@@ -2,7 +2,7 @@ package kr.ac.jbnu.mobileAppProgramming.group10.database.dao;
 
 import java.util.List;
 
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
 
 public interface ScheduleDAOInt {
     ScheduleDTO getSchedule(int schedule_id);

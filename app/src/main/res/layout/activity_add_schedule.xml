@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@mipmap/pbackground"
+    android:background="@mipmap/background"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 <ScrollView
     android:layout_width="match_parent"
@@ -21,16 +21,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Schedule"
+        android:text="일정 관리"
         android:textColor="@color/white"
         android:textSize="35sp"
+        android:textStyle="bold"
         android:layout_marginTop="70dp"
         />
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:scaleType="fitXY"
         android:src="@mipmap/line"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
     <EditText
         android:id="@+id/addSchedule_dateText"
         android:layout_width="match_parent"
@@ -45,6 +48,7 @@
         android:textColorHint="#ffffff"
         android:textColor="#ffffff"
         android:textAlignment="center"
+        android:textSize="25sp"
         android:gravity="center_horizontal" />
 
     <EditText
@@ -62,7 +66,8 @@
         android:layout_gravity="center_horizontal"
         android:textAlignment="center"
         android:textColorHint="#ffffff"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff"
+        android:textSize="25sp"/>
 
     <EditText
         android:id="@+id/addSchedule_scheduleText"
@@ -76,12 +81,13 @@
         android:textColorHint="#ffffff"
         android:inputType="textCapSentences"
         android:textAlignment="center"
+        android:textSize="25sp"
         android:gravity="center_horizontal"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="130dp"
         android:layout_marginBottom="50dp"
         android:orientation="horizontal">
         <Button
@@ -89,11 +95,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="15dp"
             android:layout_weight="0.5"
             android:gravity="center"
             android:text="완료"
+            android:textColor="@color/white"
             android:onClick="clickAddScheduleCompleteBtn"
             android:background="@drawable/circle_button"
 
@@ -102,10 +109,11 @@
             android:id="@+id/addSchedule_cancelBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="30dp"
             android:layout_weight="0.5"
             android:text="취소"
+            android:textColor="@color/white"
             android:onClick="clickAddScheduleCancelBtn"
             android:background="@drawable/circle_button"/>
     </LinearLayout>

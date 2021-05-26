@@ -1,7 +1,5 @@
 package kr.ac.jbnu.mobileAppProgramming.group10;
 
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.daoimpl.TripDAOImpl;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
 public class TripListActivity extends AppCompatActivity {
     RecyclerView tripList_recyclerView;

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,12 +19,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
 
 public class MenuActivity extends AppCompatActivity {
     TextView menu_text_noneCurrent;
     TextView menu_text_current_prev, menu_text_current_current, menu_text_current_next;
     Button menu_currentTripBtn;
+    ImageButton menu_notificationBtn;
     LinearLayout menu_current_layout;
 
     String prevSchedule;
@@ -41,11 +43,23 @@ public class MenuActivity extends AppCompatActivity {
         menu_text_current_current = findViewById(R.id.menu_text_current_current);
         menu_text_current_next = findViewById(R.id.menu_text_current_next);
         menu_currentTripBtn = findViewById(R.id.menu_currentTripBtn);
+        menu_notificationBtn = findViewById(R.id.menu_notificationBtn);
 
         tripId = getIntent().getIntExtra("tripId", -1);
         prevSchedule = getIntent().getStringExtra("prevSchedule");
         currentSchedule = getIntent().getStringExtra("currentSchedule");
         nextSchedule = getIntent().getStringExtra("nextSchedule");
+
+        SharedPreferences sharedPreferences = getSharedPreferences("notification", MODE_PRIVATE);
+        boolean isNotificationActive = sharedPreferences.getBoolean("isActive", true);
+
+        if(isNotificationActive) {
+            menu_notificationBtn.setBackgroundResource(R.mipmap.bell_on_icon);
+            Intent intent = new Intent(MenuActivity.this, NotificationService.class);
+            startService(intent);
+        } else {
+            menu_notificationBtn.setBackgroundResource(R.mipmap.bell_off_icon);
+        }
         drawView();
     }
 
@@ -97,7 +111,7 @@ public class MenuActivity extends AppCompatActivity {
                     currentSchedules.add(schedule);
             }
 
-            if(!currentSchedule.isEmpty()) {
+            if(!currentSchedules.isEmpty()) {
                 if(!prevSchedules.isEmpty()) prevSchedule = prevSchedules.get(prevSchedules.size()-1).getSchedule_name();
                 if(currentSchedules.size() > 1) {
                     currentSchedule = currentSchedules.get(0).getSchedule_name();
@@ -135,9 +149,11 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void clickCurrentTripBtn(View view) {
-        Intent intent = new Intent(MenuActivity.this, ScheduleListActivity.class);
-        intent.putExtra("tripId", tripId);
-        startActivity(intent);
+        if(tripId != -1) {
+            Intent intent = new Intent(MenuActivity.this, ScheduleListActivity.class);
+            intent.putExtra("tripId", tripId);
+            startActivity(intent);
+        }
     }
 
     public void clickAddTripBtn(View view) {
@@ -147,5 +163,26 @@ public class MenuActivity extends AppCompatActivity {
     public void clickTripListBtn(View view) {
         Intent intent = new Intent(MenuActivity.this, TripListActivity.class);
         startActivity(intent);
+    }
+
+    public void clickNotificationBtn(View view) {
+        SharedPreferences sharedPreferences = getSharedPreferences("notification", MODE_PRIVATE);
+        boolean isNotificationActive = sharedPreferences.getBoolean("isActive", true);
+        if(isNotificationActive) {
+            Intent intent = new Intent(MenuActivity.this, NotificationService.class);
+            stopService(intent);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isActive", false);
+            editor.commit();
+            menu_notificationBtn.setBackgroundResource(R.mipmap.bell_off_icon);
+        }
+        else {
+            Intent intent = new Intent(MenuActivity.this, NotificationService.class);
+            startService(intent);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isActive", true);
+            editor.commit();
+            menu_notificationBtn.setBackgroundResource(R.mipmap.bell_on_icon);
+        }
     }
 }

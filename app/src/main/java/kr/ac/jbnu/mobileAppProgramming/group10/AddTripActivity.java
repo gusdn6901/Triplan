@@ -1,7 +1,6 @@
 package kr.ac.jbnu.mobileAppProgramming.group10;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,15 +8,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.amitshekhar.DebugDB;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
 public class AddTripActivity extends AppCompatActivity {
     EditText add_trip_nameText, add_trip_locationText, add_trip_startDateText, add_trip_endDateText;

@@ -1,4 +1,4 @@
-package kr.ac.jbnu.mobileAppProgramming.group10.database.dto2;
+package kr.ac.jbnu.mobileAppProgramming.group10.database.dto;
 
 import android.support.annotation.NonNull;
 

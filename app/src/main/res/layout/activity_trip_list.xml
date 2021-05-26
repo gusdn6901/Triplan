@@ -5,29 +5,33 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@mipmap/pbackground"
+    android:background="@mipmap/background"
     tools:context="kr.ac.jbnu.mobileAppProgramming.group10.TripListActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Trip List"
+        android:text="여행 목록"
         android:textColor="@color/white"
         android:textSize="35sp"
+        android:textStyle="bold"
         android:layout_marginTop="20dp"
         />
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:scaleType="fitXY"
         android:src="@mipmap/line"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
 
 <android.support.v7.widget.RecyclerView
     android:id="@+id/tripList_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"/>
 
 
 

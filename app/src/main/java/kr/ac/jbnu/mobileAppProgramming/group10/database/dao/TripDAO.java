@@ -11,7 +11,7 @@ import java.util.List;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBContract;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBHelper;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
 public class TripDAO implements TripDAOInt {
     DBHelper dbHelper;

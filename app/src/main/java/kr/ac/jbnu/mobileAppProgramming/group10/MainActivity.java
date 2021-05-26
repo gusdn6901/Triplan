@@ -16,9 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.TripDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
 
 public class MainActivity extends AppCompatActivity {
 

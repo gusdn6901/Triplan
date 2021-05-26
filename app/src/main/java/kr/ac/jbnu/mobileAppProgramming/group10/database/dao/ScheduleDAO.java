@@ -10,7 +10,7 @@ import java.util.List;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBContract;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBHelper;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dto2.ScheduleDTO;
+import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
 
 public class ScheduleDAO implements ScheduleDAOInt {
     DBHelper dbHelper;
