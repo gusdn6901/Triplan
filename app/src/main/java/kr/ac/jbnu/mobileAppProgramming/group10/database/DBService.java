@@ -44,7 +44,6 @@ public class DBService implements DBServiceInt {
         }
     }
 
-    public ScheduleDTO getSchedule(int schedule_id) { return scheduleDAO.getSchedule(schedule_id); }
     public boolean insertSchedule(ScheduleDTO scheduleDTO) { return scheduleDAO.insertSchedule(scheduleDTO); }
     public boolean updateSchedule(ScheduleDTO scheduleDTO) { return scheduleDAO.updateSchedule(scheduleDTO); }
     public boolean deleteSchedule(int id) { return scheduleDAO.deleteSchedule(id); }

@@ -14,7 +14,6 @@ public interface DBServiceInt {
     TripDTO getCurrentTrip();
     void resetCurrentTrip();
 
-    ScheduleDTO getSchedule(int schedule_id);
     boolean insertSchedule(ScheduleDTO scheduleDTO);
     boolean updateSchedule(ScheduleDTO scheduleDTO);
     boolean deleteSchedule(int id);
