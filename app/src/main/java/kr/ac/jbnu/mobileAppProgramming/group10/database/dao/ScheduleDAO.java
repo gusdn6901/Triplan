@@ -13,13 +13,11 @@ import kr.ac.jbnu.mobileAppProgramming.group10.database.DBHelper;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
 
 public class ScheduleDAO implements ScheduleDAOInt {
-    DBHelper dbHelper;
-    SQLiteDatabase database;
+    static SQLiteDatabase database;
 
-    public ScheduleDAO(Context context) {
-        dbHelper = new DBHelper(context);
-        database = dbHelper.getReadableDatabase();
-    }
+    private static ScheduleDAO instance = new ScheduleDAO();
+    private ScheduleDAO() {}
+    public static ScheduleDAO getInstance(DBHelper dbHelper) { database = dbHelper.getReadableDatabase(); return instance; }
 
     @Override
     public ScheduleDTO getSchedule(int schedule_id) {

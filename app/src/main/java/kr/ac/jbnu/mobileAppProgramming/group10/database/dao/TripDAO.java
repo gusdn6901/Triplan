@@ -14,13 +14,11 @@ import kr.ac.jbnu.mobileAppProgramming.group10.database.DBHelper;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
 public class TripDAO implements TripDAOInt {
-    DBHelper dbHelper;
-    SQLiteDatabase database;
+    static SQLiteDatabase database;
 
-    public TripDAO(Context context) {
-        dbHelper = new DBHelper(context);
-        database = dbHelper.getReadableDatabase();
-    }
+    private TripDAO() {}
+    private static TripDAO instance = new TripDAO();
+    public static TripDAO getInstance(DBHelper dbHelper) { database = dbHelper.getReadableDatabase(); return instance; }
 
     @Override
     public TripDTO getTrip(int trip_id) {
@@ -28,32 +26,6 @@ public class TripDAO implements TripDAOInt {
 
         String condition = DBContract.COLUMN_NAME_TRIP_ID + "= ?";
         String[] param = new String[]{String.valueOf(trip_id)};
-        Cursor cursor = database.query(DBContract.TABLE_NAME_TRIP,
-                null, condition, param, null, null, null);
-
-        while (cursor.moveToNext()) {
-            tripDTO.setTrip_id(cursor.getInt(0));
-            tripDTO.setTrip_name(cursor.getString(1));
-            tripDTO.setTrip_location(cursor.getString(2));
-            tripDTO.setTrip_start_date_year(cursor.getInt(3));
-            tripDTO.setTrip_start_date_month(cursor.getInt(4));
-            tripDTO.setTrip_start_date_day(cursor.getInt(5));
-            tripDTO.setTrip_end_date_year(cursor.getInt(6));
-            tripDTO.setTrip_end_date_month(cursor.getInt(7));
-            tripDTO.setTrip_end_date_day(cursor.getInt(8));
-            tripDTO.setTrip_is_current(cursor.getInt(9));
-        }
-
-        cursor.close();
-        return tripDTO;
-    }
-
-    @Override
-    public TripDTO getTripByName(String trip_name) {
-        TripDTO tripDTO = new TripDTO();
-
-        String condition = DBContract.COLUMN_NAME_TRIP_NAME + "= ?";
-        String[] param = new String[]{String.valueOf(trip_name)};
         Cursor cursor = database.query(DBContract.TABLE_NAME_TRIP,
                 null, condition, param, null, null, null);
 
@@ -129,17 +101,6 @@ public class TripDAO implements TripDAOInt {
         cursor.close();
 
         return count;
-    }
-
-    @Override
-    public void resetCurrentTrip() {
-        List<TripDTO> trips = getAllTrips();
-        Iterator<TripDTO> iter = trips.iterator();
-        while(iter.hasNext()) {
-            TripDTO trip = iter.next();
-            trip.setTrip_is_current(0);
-            updateTrip(trip);
-        }
     }
 
     @Override

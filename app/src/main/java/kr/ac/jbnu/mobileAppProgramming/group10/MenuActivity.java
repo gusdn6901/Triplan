@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import kr.ac.jbnu.mobileAppProgramming.group10.database.DBService;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
 
@@ -69,7 +70,6 @@ public class MenuActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("currentTrip", Context.MODE_PRIVATE);
         tripId = sharedPref.getInt("tripId", -1);
         if(tripId != -1) {
-            ScheduleDAO scheduleDAO = new ScheduleDAO(this);
             List<ScheduleDTO> prevSchedules = new ArrayList<>();
             List<ScheduleDTO> currentSchedules = new ArrayList<>();
             List<ScheduleDTO> nextSchedules = new ArrayList<>();
@@ -81,7 +81,7 @@ public class MenuActivity extends AppCompatActivity {
             int nowHour = Integer.parseInt(getTime.split("/")[3]);
             int nowMinute = Integer.parseInt(getTime.split("/")[4]);
 
-            List<ScheduleDTO> schedules = scheduleDAO.getSchedulesForDate(tripId, nowYear, nowMonth, nowDay);
+            List<ScheduleDTO> schedules = DBService.getInstance(this).getSchedulesForDate(tripId, nowYear, nowMonth, nowDay);
             Collections.sort(schedules);
 
             Iterator<ScheduleDTO> iter = schedules.iterator();

@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import kr.ac.jbnu.mobileAppProgramming.group10.database.DBService;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
@@ -72,8 +73,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
                 builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ScheduleDAO scheduleDAO = new ScheduleDAO(context);
-                        scheduleDAO.deleteSchedule(schedule.getSchedule_id());
+                        DBService.getInstance(context).deleteSchedule(schedule.getSchedule_id());
                         ((Activity)context).startActivity(((Activity)context).getIntent());
                         ((Activity)context).finish();
                     }
@@ -87,10 +87,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             }
         });
 
-        TripDAO tripDAO = new TripDAO(context);
-        if(tripDAO.getCurrentTrip().getTrip_id() == null)
+        if(DBService.getInstance(context).getCurrentTrip().getTrip_id() == null)
             return;
-        else if(tripDAO.getCurrentTrip().getTrip_id() != ((Activity)context).getIntent().getIntExtra("tripId", -1))
+        else if(DBService.getInstance(context).getCurrentTrip().getTrip_id() != ((Activity)context).getIntent().getIntExtra("tripId", -1))
             return;
 
         Date now = new Date(System.currentTimeMillis());
@@ -101,32 +100,20 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         int nowHour = Integer.parseInt(getTime.split("/")[3]);
         int nowMinute = Integer.parseInt(getTime.split("/")[4]);
 
-        ScheduleDTO prevSchedule = null;
-        if(schedule.getSchedule_date_year() < nowYear){
-            if(schedule.getSchedule_hour() < nowHour)
-                prevSchedule = schedule;
-            else if(schedule.getSchedule_minute() < nowMinute)
-                prevSchedule = schedule;
+        if(schedule.getSchedule_date_year() < nowYear) changeTextColor(holder);
+        else if(schedule.getSchedule_date_month() < nowMonth) changeTextColor(holder);
+        else if(schedule.getSchedule_date_day() < nowDay) changeTextColor(holder);
+        else {
+            if(schedule.getSchedule_hour() < nowHour) changeTextColor(holder);
+            else if(schedule.getSchedule_hour() <= nowHour && schedule.getSchedule_minute() < nowMinute) changeTextColor(holder);
         }
-        else if(schedule.getSchedule_date_month() < nowMonth){
-            if(schedule.getSchedule_hour() < nowHour)
-                prevSchedule = schedule;
-            else if(schedule.getSchedule_minute() < nowMinute)
-                prevSchedule = schedule;
-        }
-        else if(schedule.getSchedule_date_day() < nowDay) {
-            if(schedule.getSchedule_hour() < nowHour)
-                prevSchedule = schedule;
-            else if(schedule.getSchedule_minute() < nowMinute)
-                prevSchedule = schedule;
-        }
+    }
 
-        if(prevSchedule != null) {
-            holder.scheduleList_hourText.setTextColor(Color.GRAY);
-            holder.scheduleList_middleText.setTextColor(Color.GRAY);
-            holder.scheduleList_minuteText.setTextColor(Color.GRAY);
-            holder.scheduleList_scheduleText.setTextColor(Color.GRAY);
-        }
+    private void changeTextColor(ScheduleViewHolder holder) {
+        holder.scheduleList_hourText.setTextColor(Color.GRAY);
+        holder.scheduleList_middleText.setTextColor(Color.GRAY);
+        holder.scheduleList_minuteText.setTextColor(Color.GRAY);
+        holder.scheduleList_scheduleText.setTextColor(Color.GRAY);
     }
 
     @Override

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import kr.ac.jbnu.mobileAppProgramming.group10.database.DBService;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
@@ -67,12 +68,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                             editor.putInt("tripId", trips.get(position).getTrip_id());
                             editor.commit();
 
-                            TripDAO tripDAO = new TripDAO(context);
-                            tripDAO.resetCurrentTrip();
+                            DBService.getInstance(context).resetCurrentTrip();
 
                             TripDTO trip = trips.get(position);
                             trip.setTrip_is_current(1);
-                            tripDAO.updateTrip(trip);
+                            DBService.getInstance().updateTrip(trip);
                             ((Activity)context).finish();
                             ((Activity)context).startActivity(((Activity)context).getIntent());
                         }
@@ -96,12 +96,10 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                             editor.putInt("tripId", -1);
                             editor.commit();
 
-                            TripDAO tripDAO = new TripDAO(context);
-                            tripDAO.resetCurrentTrip();
-
+                            DBService.getInstance(context).resetCurrentTrip();
                             TripDTO trip = trips.get(position);
                             trip.setTrip_is_current(0);
-                            tripDAO.updateTrip(trip);
+                            DBService.getInstance().updateTrip(trip);
                         }
                     });
                     builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
@@ -122,10 +120,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                 builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        TripDAO tripDAO = new TripDAO(context);
-                        tripDAO.deleteTrip(trips.get(position).getTrip_id());
-                        ScheduleDAO scheduleDAO = new ScheduleDAO(context);
-                        scheduleDAO.deleteScheduleByTrip(trips.get(position).getTrip_id());
+                        DBService.getInstance(context).deleteTrip(trips.get(position).getTrip_id());
+                        DBService.getInstance().deleteScheduleByTrip(trips.get(position).getTrip_id());
                         ((Activity)context).startActivity(((Activity)context).getIntent());
                         ((Activity)context).finish();
                     }

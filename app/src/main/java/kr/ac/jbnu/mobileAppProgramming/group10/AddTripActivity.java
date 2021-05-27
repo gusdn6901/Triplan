@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import kr.ac.jbnu.mobileAppProgramming.group10.database.DBService;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
@@ -131,8 +132,7 @@ public class AddTripActivity extends AppCompatActivity {
             trip.setTrip_end_date_day(Integer.parseInt(endDates[2]));
             trip.setTrip_is_current(0);
 
-            TripDAO tripDAO = new TripDAO(this);
-            tripDAO.insertTrip(trip);
+            DBService.getInstance(this).insertTrip(trip);
             finish();
         }
     }

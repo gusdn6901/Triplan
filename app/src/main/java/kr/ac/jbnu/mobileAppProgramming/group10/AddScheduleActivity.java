@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import kr.ac.jbnu.mobileAppProgramming.group10.database.DBService;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
@@ -107,8 +108,7 @@ public class AddScheduleActivity extends AppCompatActivity {
     }
 
     public void clickAddScheduleCompleteBtn(View view) {
-        TripDAO tripDAO = new TripDAO(this);
-        TripDTO tripDTO = tripDAO.getTrip(getIntent().getIntExtra("tripId", -1));
+        TripDTO tripDTO =  DBService.getInstance(this).getTrip(getIntent().getIntExtra("tripId", -1));
         int yearText = addSchedule_dateText.getText().toString().equals("") ? 0 : Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[0]);
         int monthText = addSchedule_dateText.getText().toString().equals("") ? 0 : Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[1]);
         int dayText = addSchedule_dateText.getText().toString().equals("") ? 0 : Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[2]);

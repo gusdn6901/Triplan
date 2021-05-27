@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import kr.ac.jbnu.mobileAppProgramming.group10.database.DBService;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
@@ -42,8 +43,7 @@ public class ScheduleListActivity extends AppCompatActivity {
         scheduleList_prevBtn = findViewById(R.id.scheduleList_prevBtn);
         scheduleList_nextBtn = findViewById(R.id.scheduleList_nextBtn);
 
-        TripDAO tripDAO = new TripDAO(this);
-        TripDTO tripDTO = tripDAO.getTrip(tripId);
+        TripDTO tripDTO = DBService.getInstance(this).getTrip(tripId);
 
         year = tripDTO.getTrip_start_date_year().intValue();
         month = tripDTO.getTrip_start_date_month().intValue();
@@ -66,8 +66,7 @@ public class ScheduleListActivity extends AppCompatActivity {
             schedule.setSchedule_hour(Integer.parseInt(data.getStringExtra("time").split(":")[0]));
             schedule.setSchedule_minute(Integer.parseInt(data.getStringExtra("time").split(":")[1]));
 
-            ScheduleDAO scheduleDAO = new ScheduleDAO(this);
-            scheduleDAO.insertSchedule(schedule);
+            DBService.getInstance(this).insertSchedule(schedule);
 
             Toast.makeText(this, "일정 추가가 완료되었습니다.", Toast.LENGTH_SHORT).show();
             drawView();
@@ -82,8 +81,7 @@ public class ScheduleListActivity extends AppCompatActivity {
             schedule.setSchedule_hour(Integer.parseInt(data.getStringExtra("time").split(":")[0]));
             schedule.setSchedule_minute(Integer.parseInt(data.getStringExtra("time").split(":")[1]));
 
-            ScheduleDAO scheduleDAO = new ScheduleDAO(this);
-            scheduleDAO.updateSchedule(schedule);
+            DBService.getInstance(this).updateSchedule(schedule);
 
             Toast.makeText(this, "일정 수정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
             drawView();
@@ -93,8 +91,7 @@ public class ScheduleListActivity extends AppCompatActivity {
     public void drawView() {
         schedules = new ArrayList<>();
 
-        TripDAO tripDAO = new TripDAO(this);
-        TripDTO tripDTO = tripDAO.getTrip(tripId);
+        TripDTO tripDTO = DBService.getInstance(this).getTrip(tripId);
         if(tripDTO.getTrip_start_date_year() == year && tripDTO.getTrip_start_date_month() == month && tripDTO.getTrip_start_date_day() == day) scheduleList_prevBtn.setClickable(false);
         else scheduleList_prevBtn.setClickable(true);
         if(tripDTO.getTrip_end_date_year() == year && tripDTO.getTrip_end_date_month() == month && tripDTO.getTrip_end_date_day() == day) scheduleList_nextBtn.setClickable(false);
@@ -104,8 +101,7 @@ public class ScheduleListActivity extends AppCompatActivity {
         scheduleList_monthText.setText(String.valueOf(month));
         scheduleList_dayText.setText(String.valueOf(day));
 
-        ScheduleDAO scheduleDAO = new ScheduleDAO(this);
-        schedules = scheduleDAO.getSchedulesForDate(tripId, year, month, day);
+        schedules = DBService.getInstance(this).getSchedulesForDate(tripId, year, month, day);
 
         Collections.sort(schedules);
 
