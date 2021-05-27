@@ -17,7 +17,7 @@ public class DBService implements DBServiceInt {
     private static DBHelper dbHelper;
     static SQLiteDatabase database;
 
-    public DBService() {}
+    private DBService() {}
     private static DBService instance = new DBService();
     public static DBService getInstance(Context context) {
         dbHelper = new DBHelper(context);
@@ -35,12 +35,12 @@ public class DBService implements DBServiceInt {
     public List<TripDTO> getAllTrips() { return tripDAO.getAllTrips(); }
     public TripDTO getCurrentTrip() { return tripDAO.getCurrentTrip(); }
     public void resetCurrentTrip() {
-        List<TripDTO> trips = getAllTrips();
+        List<TripDTO> trips = tripDAO.getAllTrips();
         Iterator<TripDTO> iter = trips.iterator();
         while(iter.hasNext()) {
             TripDTO trip = iter.next();
             trip.setTrip_is_current(0);
-            updateTrip(trip);
+            tripDAO.updateTrip(trip);
         }
     }
 
