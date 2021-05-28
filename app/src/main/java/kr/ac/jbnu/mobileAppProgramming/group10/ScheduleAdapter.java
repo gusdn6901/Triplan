@@ -18,8 +18,6 @@ import java.util.Date;
 import java.util.List;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBService;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ScheduleViewHolder> {
@@ -52,7 +50,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         holder.scheduleList_modifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, AddScheduleActivity.class);
+                Intent intent = new Intent(context, ManageScheduleActivity.class);
                 intent.putExtra("scheduleId", schedule.getSchedule_id());
                 intent.putExtra("tripId", ((Activity)context).getIntent().getIntExtra("tripId", -1));
                 intent.putExtra("name", schedule.getSchedule_name());

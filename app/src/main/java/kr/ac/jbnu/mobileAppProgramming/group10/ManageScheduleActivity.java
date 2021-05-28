@@ -16,10 +16,9 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBService;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
-public class AddScheduleActivity extends AppCompatActivity {
+public class ManageScheduleActivity extends AppCompatActivity {
     EditText addSchedule_dateText, addSchedule_timeText, addSchedule_scheduleText;
     public int hours;
     public int minutes;
@@ -29,10 +28,10 @@ public class AddScheduleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_schedule);
-        addSchedule_dateText = findViewById(R.id.addSchedule_dateText);
-        addSchedule_timeText = findViewById(R.id.addSchedule_timeText);
-        addSchedule_scheduleText = findViewById(R.id.addSchedule_scheduleText);
+        setContentView(R.layout.activity_manage_schedule);
+        addSchedule_dateText = findViewById(R.id.manageSchedule_dateText);
+        addSchedule_timeText = findViewById(R.id.manageSchedule_timeText);
+        addSchedule_scheduleText = findViewById(R.id.manageSchedule_scheduleText);
 
         if(getIntent().getBooleanExtra("isModify", false)) {
             int yearText = getIntent().getIntExtra("year", 0);
@@ -66,7 +65,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         addSchedule_dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(AddScheduleActivity.this, date, scheduleCalendar
+                new DatePickerDialog(ManageScheduleActivity.this, date, scheduleCalendar
                         .get(Calendar.YEAR), scheduleCalendar.get(Calendar.MONTH),
                         scheduleCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -80,7 +79,7 @@ public class AddScheduleActivity extends AppCompatActivity {
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(AddScheduleActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                mTimePicker = new TimePickerDialog(ManageScheduleActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         String hourString = String.valueOf(selectedHour);
@@ -107,7 +106,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         addSchedule_dateText.setText(sdf.format(scheduleCalendar.getTime()));
     }
 
-    public void clickAddScheduleCompleteBtn(View view) {
+    public void clickManageScheduleCompleteBtn(View view) {
         TripDTO tripDTO =  DBService.getInstance(this).getTrip(getIntent().getIntExtra("tripId", -1));
         int yearText = addSchedule_dateText.getText().toString().equals("") ? 0 : Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[0]);
         int monthText = addSchedule_dateText.getText().toString().equals("") ? 0 : Integer.parseInt(addSchedule_dateText.getText().toString().split("/")[1]);
@@ -142,6 +141,6 @@ public class AddScheduleActivity extends AppCompatActivity {
             finish();
         }
     }
-    public void clickAddScheduleCancelBtn(View view) { finish(); }
+    public void clickManageScheduleCancelBtn(View view) { finish(); }
 }
 

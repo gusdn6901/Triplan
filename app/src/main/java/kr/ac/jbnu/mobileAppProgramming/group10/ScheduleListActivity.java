@@ -15,8 +15,6 @@ import java.util.Collections;
 import java.util.List;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBService;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.ScheduleDAO;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.ScheduleDTO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
@@ -56,31 +54,21 @@ public class ScheduleListActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        ScheduleDTO schedule = new ScheduleDTO();
+        schedule.setSchedule_name(data.getStringExtra("name"));
+        schedule.setSchedule_trip_id(getIntent().getIntExtra("tripId", -1));
+        schedule.setSchedule_date_year(data.getIntExtra("year", 1900));
+        schedule.setSchedule_date_month(data.getIntExtra("month", 1));
+        schedule.setSchedule_date_day(data.getIntExtra("day", 1));
+        schedule.setSchedule_hour(Integer.parseInt(data.getStringExtra("time").split(":")[0]));
+        schedule.setSchedule_minute(Integer.parseInt(data.getStringExtra("time").split(":")[1]));
         if(requestCode == SCHEDULE_ADDED_REQUEST && resultCode == RESULT_OK) {
-            ScheduleDTO schedule = new ScheduleDTO();
-            schedule.setSchedule_name(data.getStringExtra("name"));
-            schedule.setSchedule_trip_id(getIntent().getIntExtra("tripId", -1));
-            schedule.setSchedule_date_year(data.getIntExtra("year", 1900));
-            schedule.setSchedule_date_month(data.getIntExtra("month", 1));
-            schedule.setSchedule_date_day(data.getIntExtra("day", 1));
-            schedule.setSchedule_hour(Integer.parseInt(data.getStringExtra("time").split(":")[0]));
-            schedule.setSchedule_minute(Integer.parseInt(data.getStringExtra("time").split(":")[1]));
-
             DBService.getInstance(this).insertSchedule(schedule);
 
             Toast.makeText(this, "일정 추가가 완료되었습니다.", Toast.LENGTH_SHORT).show();
             drawView();
         } else if(requestCode == SCHEDULE_MODIFIED_REQUEST && resultCode == RESULT_OK) {
-            ScheduleDTO schedule = new ScheduleDTO();
             schedule.setSchedule_id(data.getIntExtra("id", -1));
-            schedule.setSchedule_name(data.getStringExtra("name"));
-            schedule.setSchedule_trip_id(getIntent().getIntExtra("tripId", -1));
-            schedule.setSchedule_date_year(data.getIntExtra("year", 1900));
-            schedule.setSchedule_date_month(data.getIntExtra("month", 1));
-            schedule.setSchedule_date_day(data.getIntExtra("day", 1));
-            schedule.setSchedule_hour(Integer.parseInt(data.getStringExtra("time").split(":")[0]));
-            schedule.setSchedule_minute(Integer.parseInt(data.getStringExtra("time").split(":")[1]));
-
             DBService.getInstance(this).updateSchedule(schedule);
 
             Toast.makeText(this, "일정 수정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
@@ -157,7 +145,7 @@ public class ScheduleListActivity extends AppCompatActivity {
     }
 
     public void clickAddScheduleBtn(View view) {
-        Intent intent = new Intent(ScheduleListActivity.this, AddScheduleActivity.class);
+        Intent intent = new Intent(ScheduleListActivity.this, ManageScheduleActivity.class);
         intent.putExtra("tripId", tripId);
         startActivityForResult(intent, SCHEDULE_ADDED_REQUEST);
     }

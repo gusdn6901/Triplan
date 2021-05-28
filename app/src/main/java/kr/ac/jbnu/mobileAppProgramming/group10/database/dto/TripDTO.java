@@ -14,19 +14,6 @@ public class TripDTO {
 
     public TripDTO(){}
 
-    public TripDTO(String trip_name, String trip_location, Integer trip_start_date_year, Integer trip_start_date_month,
-                   Integer trip_start_date_day, Integer trip_end_date_year, Integer trip_end_date_month, Integer trip_end_date_day, Integer trip_is_current){
-        this.trip_name = trip_name;
-        this.trip_location = trip_location;
-        this.trip_start_date_year = trip_start_date_year;
-        this.trip_start_date_month = trip_start_date_month;
-        this.trip_start_date_day = trip_start_date_day;
-        this.trip_end_date_year = trip_end_date_year;
-        this.trip_end_date_month = trip_end_date_month;
-        this.trip_end_date_day = trip_end_date_day;
-        this.trip_is_current = trip_is_current;
-    }
-
     public Integer getTrip_id() { return trip_id; }
     public String getTrip_name() { return trip_name; }
     public String getTrip_location() { return trip_location; }

@@ -33,6 +33,5 @@ public class NotificationService extends Service {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(timeReceiver);
-        System.out.println("service end");
     }
 }

@@ -13,16 +13,6 @@ public class ScheduleDTO implements Comparable<ScheduleDTO> {
     private Integer schedule_minute;
 
     public ScheduleDTO() {}
-    public ScheduleDTO(Integer schedule_trip_id, String schedule_name, Integer schedule_date_year, Integer schedule_date_month,
-                       Integer schedule_date_day, Integer schedule_hour, Integer schedule_minute) {
-        this.schedule_trip_id = schedule_trip_id;
-        this.schedule_name = schedule_name;
-        this.schedule_date_year = schedule_date_year;
-        this.schedule_date_month = schedule_date_month;
-        this.schedule_date_day = schedule_date_day;
-        this.schedule_hour = schedule_hour;
-        this.schedule_minute = schedule_minute;
-    }
 
     public Integer getSchedule_id() { return schedule_id; }
     public Integer getSchedule_trip_id() { return schedule_trip_id; }

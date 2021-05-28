@@ -13,7 +13,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import kr.ac.jbnu.mobileAppProgramming.group10.database.DBService;
-import kr.ac.jbnu.mobileAppProgramming.group10.database.dao.TripDAO;
 import kr.ac.jbnu.mobileAppProgramming.group10.database.dto.TripDTO;
 
 public class AddTripActivity extends AppCompatActivity {
@@ -92,26 +91,26 @@ public class AddTripActivity extends AppCompatActivity {
         String startDate = add_trip_startDateText.getText().toString();
         String endDate = add_trip_endDateText.getText().toString();
 
-        int startYear = Integer.parseInt(startDate.split("/")[0]);
-        int startMonth = Integer.parseInt(startDate.split("/")[1]);
-        int startDay = Integer.parseInt(startDate.split("/")[2]);
-        int endYear = Integer.parseInt(endDate.split("/")[0]);
-        int endMonth = Integer.parseInt(endDate.split("/")[1]);
-        int endDay = Integer.parseInt(endDate.split("/")[2]);
+        int startYear = (startDate.equals("")) ? 0 : Integer.parseInt(startDate.split("/")[0]);
+        int startMonth = (startDate.equals("")) ? 0 : Integer.parseInt(startDate.split("/")[1]);
+        int startDay = (startDate.equals("")) ? 0 : Integer.parseInt(startDate.split("/")[2]);
+        int endYear = (endDate.equals("")) ? 0 : Integer.parseInt(endDate.split("/")[0]);
+        int endMonth = (endDate.equals("")) ? 0 : Integer.parseInt(endDate.split("/")[1]);
+        int endDay = (endDate.equals("")) ? 0 : Integer.parseInt(endDate.split("/")[2]);
 
-        if(tripName.equals("")) {
-            Toast.makeText(this, "여행 이름이 비어있습니다.",Toast.LENGTH_SHORT).show();
-            add_trip_nameText.requestFocus();
-        } else if(tripLocation.equals("")) {
-            Toast.makeText(this, "여행 장소가 비어있습니다.",Toast.LENGTH_SHORT).show();
-            add_trip_locationText.requestFocus();
-        } else if(startDate.equals("")) {
+        if(startDate.equals("")) {
             Toast.makeText(this, "시작 일시가 비어있습니다.",Toast.LENGTH_SHORT).show();
             add_trip_startDateText.requestFocus();
         } else if(endDate.equals("")) {
             Toast.makeText(this, "종료 일시가 비어있습니다.",Toast.LENGTH_SHORT).show();
             add_trip_endDateText.requestFocus();
-        } else if(startYear > endYear) {
+        } else if(tripName.equals("")) {
+            Toast.makeText(this, "여행 이름이 비어있습니다.",Toast.LENGTH_SHORT).show();
+            add_trip_nameText.requestFocus();
+        } else if(tripLocation.equals("")) {
+            Toast.makeText(this, "여행 장소가 비어있습니다.",Toast.LENGTH_SHORT).show();
+            add_trip_locationText.requestFocus();
+        }  else if(startYear > endYear) {
             Toast.makeText(this, "시작일이 종료일보다 늦습니다.",Toast.LENGTH_SHORT).show();
         } else if(startYear == endYear && startMonth > endMonth) {
             Toast.makeText(this, "시작일이 종료일보다 늦습니다.",Toast.LENGTH_SHORT).show();
