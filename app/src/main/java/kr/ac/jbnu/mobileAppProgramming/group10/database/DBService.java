@@ -17,7 +17,7 @@ public class DBService implements DBServiceInt {
     private static DBHelper dbHelper;
     static SQLiteDatabase database;
 
-    public DBService() {}
+    private DBService() {}
     private static DBService instance = new DBService();
     public static DBService getInstance(Context context) {
         dbHelper = new DBHelper(context);
